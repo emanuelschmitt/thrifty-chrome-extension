@@ -1,0 +1,6 @@
+@import url("../app/globals.css");
+
+body {
+  min-width: 20rem;
+  margin: 0;
+}
