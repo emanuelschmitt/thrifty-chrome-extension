@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Input, LogoIcon, ButtonLoading } from '@/components/ui'
-import { Platform, platforms, toCountryEmoji } from '@/lib'
+import { Platform, formatCurrency, platforms, toCountryEmoji } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
 import { withProviders } from '@/lib/providers'
 import { useQueries } from '@tanstack/react-query'
@@ -104,7 +104,7 @@ const Popup = () => {
                   key={result.platformId + index}
                   name={`${platform.name} ${toCountryEmoji(platform.country)}`}
                   itemsAmount={result.amountOfResults}
-                  minPrice={result.minPrice.toFixed(2) + ' ' + platform.currency}
+                  minPrice={formatCurrency(result.minPrice, platform.currency)}
                   onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
                 />
               )

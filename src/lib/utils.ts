@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { Country } from './model'
+import { Country, Currency } from './model'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -25,4 +25,12 @@ export const toCountryEmoji = (country: Country) => {
     default:
       return '🏴‍☠️'
   }
+}
+
+export const formatCurrency = (amount: number, currency: Currency) => {
+  if (currency === 'DKK') {
+    return amount + ' ' + currency
+  }
+
+  return (amount / 100).toFixed(2) + ' ' + currency
 }

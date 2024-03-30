@@ -12,14 +12,13 @@ function getMinPrice($: CheerioAPI): number {
   }
   const filteredPrices = prices.filter((price) => price !== 'VB' || !isNaN(parseInt(price)))
   // Determine the output
-  return filteredPrices.length ? parseInt(filteredPrices[0]) : -1
+  return filteredPrices.length ? parseInt(filteredPrices[0]) * 100 : -1
 }
 
 function getNumberOfResults($: CheerioAPI): number | null {
   const summaryText = $('.breadcrump-summary').text()
   const regex = /(\d+) Ergebnissen/
   const match = summaryText.match(regex)
-
   return match && match[1] ? parseInt(match[1], 10) : null
 }
 

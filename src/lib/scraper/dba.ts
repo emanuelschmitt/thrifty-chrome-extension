@@ -20,7 +20,6 @@ function getNumberOfResults($: CheerioAPI): number | null {
   const text = $('tr.search-result-separator td').text().trim()
   const match = text.match(/\d+/)
   if (!match || !match[0]) {
-    console.log('null matches')
     return null
   }
   return parseInt(match[0], 10)
