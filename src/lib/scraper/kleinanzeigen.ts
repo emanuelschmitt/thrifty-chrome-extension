@@ -10,6 +10,7 @@ function getMinPrice($: CheerioAPI): number {
   if (prices.includes('Zu verschenken')) {
     return 0
   }
+
   const filteredPrices = prices.filter((price) => price !== 'VB' || !isNaN(parseInt(price)))
   // Determine the output
   return filteredPrices.length ? parseInt(filteredPrices[0]) * 100 : -1

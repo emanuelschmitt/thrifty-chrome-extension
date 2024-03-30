@@ -1,6 +1,6 @@
-import { parseDBA, parseEbayKleinanzeigen, parseWillhaben } from './scraper'
+import { parseDBA, parseEbayKleinanzeigen, parseSubito, parseWillhaben } from './scraper'
 
-export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben'
+export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben' | 'subito'
 export type Country =
   | 'Germany'
   | 'Denmark'
@@ -24,7 +24,7 @@ export type Platform = {
 export type SearchResult = {
   platformId: PlatformId
   amountOfResults: number
-  minPrice: number
+  minPrice: number | null
 }
 
 export const platforms: Record<PlatformId, Platform> = {
@@ -63,5 +63,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.willhaben.at/iad/kaufen-und-verkaufen/marktplatz?keyword=${searchTerm}&page=1&sort=3`
     },
     toScrapedSearchResult: parseWillhaben,
+  },
+  subito: {
+    id: 'subito',
+    name: 'Subito',
+    url: 'https://www.subito.it',
+    country: 'Italy',
+    currency: 'EUR',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = searchTerm.trim().toLocaleLowerCase().replace(/\s/g, '+')
+      return `https://www.subito.it/annunci-italia/vendita/usato/?q=${searchTerm}&order=priceasc`
+    },
+    toScrapedSearchResult: parseSubito,
   },
 }

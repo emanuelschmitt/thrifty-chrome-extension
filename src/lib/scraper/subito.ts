@@ -2,8 +2,9 @@ import { CheerioAPI, load } from 'cheerio'
 import { SearchResult } from '../model'
 
 function getMinPrice($: CheerioAPI): number | null {
-  let minPrice = Infinity
-  $('span[data-testid^="search-result-entry-price-"]').each((index, element) => {
+  let prices: number[] = []
+
+  $('div[class^="index-module_price"]').each((index, element) => {
     const priceText = $(element).text().trim()
     const price = parseFloat(
       priceText
@@ -12,24 +13,25 @@ function getMinPrice($: CheerioAPI): number | null {
         .replace('.', ''),
     ) // Replace commas with dots and remove other non-numeric characters
     const priceInt = Math.round(price * 100) // Convert to integer (e.g., € 0,20 -> 20, € 270 -> 27000, € 390 -> 39000)
-
-    if (priceInt < minPrice) {
-      minPrice = priceInt
-    }
+    prices.push(priceInt)
   })
 
-  return minPrice === Infinity ? null : minPrice
+  if (prices.length === 0) {
+    return null
+  }
+
+  return Math.min(...prices)
 }
 
 function getNumberOfResults($: CheerioAPI): number | null {
-  const summaryText = $('#result-list-title').text()
-  const regex = /(\d+) Anzeigen/
+  const summaryText = $('.listing-heading > p').text()
+  const regex = /(\d+) risul/
   const match = summaryText.match(regex)
 
   return match && match[1] ? parseInt(match[1], 10) : null
 }
 
-export function parseWillhaben(html: string): SearchResult | null {
+export function parseSubito(html: string): SearchResult | null {
   const $ = load(html)
 
   const amountOfResults = getNumberOfResults($)
@@ -38,7 +40,7 @@ export function parseWillhaben(html: string): SearchResult | null {
   }
 
   return {
-    platformId: 'willhaben',
+    platformId: 'subito',
     amountOfResults,
     minPrice: getMinPrice($),
   }
