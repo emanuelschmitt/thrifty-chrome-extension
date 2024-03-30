@@ -40,8 +40,16 @@ export default defineManifest({
       matches: [],
     },
   ],
-  host_permissions: ['*://*/*', 'http://*/*', 'https://*/*'],
-  permissions: ['sidePanel', 'storage', 'tabs', 'activeTab', 'scripting'],
+  host_permissions: ['*://*/*'],
+  permissions: [
+    'sidePanel',
+    'storage',
+    'tabs',
+    'activeTab',
+    'scripting',
+    'http://*/*',
+    'https://*/*',
+  ],
   chrome_url_overrides: {
     newtab: 'newtab.html',
   },
