@@ -18,19 +18,22 @@ const Popup = () => {
   const [tempSearchTerm, setTempSearchTerm] = useStorageState<string>('popup.tempSearchTerm', '')
   const [searchTerm, setSearchTerm] = useStorageState<string>('popup.searchTerm', '')
 
-  const { searchResults, isLoading } = useQueries({
+  const { searchResults, isLoading, isFetched } = useQueries({
     queries: Object.values(platforms).map((platform) =>
       queryOptions({
         queryKey: ['search', { platform, searchTerm }],
         queryFn: () => searchPlatform(platform, searchTerm),
         enabled: !!searchTerm && !!platform.id,
-        staleTime: 1000 * 60,
       }),
     ),
     combine: (results) => ({
-      searchResults: results.filter((result) => result.isFetched).map((result) => result.data),
+      searchResults: results
+        .filter((result) => result.isFetched)
+        .map((result) => result.data)
+        .filter(Boolean),
       isLoading: results.some((result) => result.isLoading),
       isError: results.some((result) => result.isError),
+      isFetched: results.every((result) => result.isFetched),
     }),
   })
 
@@ -70,13 +73,21 @@ const Popup = () => {
           )}
         </form>
       </div>
-      {searchResults.length === 0 && (
+      {!searchTerm && (
         <div className="flex flex-col space-y-1.5 p-4">
-          <h3 className="text-base font-semibold leading-none tracking-tight">No results found</h3>
+          <h3 className="text-base font-semibold leading-none tracking-tight">
+            Please enter search query
+          </h3>
           <p className="text-sm text-muted-foreground">Please enter a search query to find items</p>
         </div>
       )}
-      {searchResults.length > 0 && (
+      {isFetched && !isLoading && searchResults.length === 0 && (
+        <div className="flex flex-col space-y-1.5 p-4">
+          <h3 className="text-base font-semibold leading-none tracking-tight">No results found</h3>
+          <p className="text-sm text-muted-foreground">Please enter a search query to try again</p>
+        </div>
+      )}
+      {isFetched && searchResults.length > 0 && (
         <div className="flex flex-col space-y-1.5 p-4">
           <h3 className="text-base font-semibold leading-none tracking-tight">
             Results for "{searchTerm}"
@@ -93,7 +104,7 @@ const Popup = () => {
                   key={result.platformId + index}
                   name={`${platform.name} ${toCountryEmoji(platform.country)}`}
                   itemsAmount={result.amountOfResults}
-                  minPrice={result.minPrice}
+                  minPrice={result.minPrice.toFixed(2) + ' ' + platform.currency}
                   onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
                 />
               )
