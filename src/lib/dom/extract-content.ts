@@ -6,7 +6,7 @@ export const extractDomContent = async (url: string): Promise<string> => {
     throw new Error('Tab id not found')
   }
 
-  return new Promise<string>(async (resolve, reject) => {
+  return new Promise<string>(async (resolve) => {
     // Listener for tab updates
     const tabUpdateListener = async (
       updatedTabId: number,

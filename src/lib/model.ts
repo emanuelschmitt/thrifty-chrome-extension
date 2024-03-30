@@ -26,7 +26,7 @@ export const platforms: Record<PlatformId, Platform> = {
     country: 'Germany',
     toSearchUrl: (searchTerm) => {
       searchTerm = searchTerm.trim().toLocaleLowerCase().replace(/\s/g, '-')
-      return `https://www.ebay-kleinanzeigen.de/s-${searchTerm}/k0`
+      return `https://www.ebay-kleinanzeigen.de/s-sortierung:preis/${searchTerm}/k0`
     },
     toScrapedSearchResult: parseEbayKleinanzeigen,
   },

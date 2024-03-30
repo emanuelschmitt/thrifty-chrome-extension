@@ -486,6 +486,39 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@tanstack/query-async-storage-persister@^5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-async-storage-persister/-/query-async-storage-persister-5.28.9.tgz#50c1b27dc6b59ab4045499706f04098186c2f490"
+  integrity sha512-b7v3Igt7q7sOPapTekh50ssYcrqjXXXSlxq8OlpYNT/X8MIY4WCRfOpnBpG8DM9A3d7z0zKByZL1WrLAg3QjpA==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.28.9"
+
+"@tanstack/query-core@5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.28.9.tgz#170a7a8794ab73aeffbaf711ac62126479a5d026"
+  integrity sha512-hNlfCiqZevr3GRVPXS3MhaGW5hjcxvCsIQ4q6ff7EPlvFwYZaS+0d9EIIgofnegDaU2BbCDlyURoYfRl5rmzow==
+
+"@tanstack/query-persist-client-core@5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-persist-client-core/-/query-persist-client-core-5.28.9.tgz#f0c25fc2c6dcb5824936efafbf862ac20c28dca4"
+  integrity sha512-H2SSS0HdjBfVFdwjDkXJgVxfkx2PfSNgo2V6+GVqjNPGCj8YyshsUpVpM9ydFbEfU/2uXFKlGHn5HjWfmjOmxg==
+  dependencies:
+    "@tanstack/query-core" "5.28.9"
+
+"@tanstack/react-query-persist-client@^5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query-persist-client/-/react-query-persist-client-5.28.9.tgz#758baf731ceb8ffa9656cc5118ead64565fead90"
+  integrity sha512-wM8oNmVzG+ASYUkcUUUA+OCM7NxKmHepSfYn9OQNeH5B1d8GPJczOF83umt8RwWT21IiOH6c9TZNok8Ms7gXBg==
+  dependencies:
+    "@tanstack/query-persist-client-core" "5.28.9"
+
+"@tanstack/react-query@^5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.28.9.tgz#13c2049daa5db6c3137473e279b209f76d39708e"
+  integrity sha512-vwifBkGXsydsLxFOBMe3+f8kvtDoqDRDwUNjPHVDDt+FoBetCbOWAUHgZn4k+CVeZgLmy7bx6aKeDbe3e8koOQ==
+  dependencies:
+    "@tanstack/query-core" "5.28.9"
+
 "@types/babel__core@^7.20.5":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"
@@ -3476,6 +3509,7 @@ streamx@^2.12.5:
     bare-events "^2.2.0"
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -3510,6 +3544,7 @@ string_decoder@~1.1.1:
     safe-buffer "~5.1.0"
 
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

@@ -1,74 +1,46 @@
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { SearchResult, platforms, toCountryEmoji } from '@/lib'
-import { ArrowRightIcon, LogoIcon } from '@/components/ui/icons'
+import React from 'react'
+import { Button, Input, LogoIcon, ButtonLoading } from '@/components/ui'
+import { Platform, platforms, toCountryEmoji } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
+import { withProviders } from '@/lib/providers'
+import { useQueries } from '@tanstack/react-query'
+import { queryOptions } from '@tanstack/react-query'
+import { useStorageState } from '@/lib/store'
+import { SearchResultItem } from './search-result-item'
 
-const SearchResultItem = ({
-  name,
-  itemsAmount,
-  minPrice,
-  onButtonClick,
-}: {
-  name: string
-  itemsAmount: number
-  minPrice: number
-  onButtonClick(): void
-}) => (
-  <div className="flex items-center space-x-4 rounded-lg w-full">
-    <div className="flex-shrink-0">
-      <Avatar>
-        {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
-        <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
-      </Avatar>
-    </div>
-    <div className="flex-grow">
-      <h2 className="text-sm font-semibold">{name}</h2>
-      <p className="text-sm text-gray-500">
-        {itemsAmount} Items found from {minPrice} EUR
-      </p>
-    </div>
-    <div className="flex-shrink-0">
-      <Button variant="secondary" size="icon" onClick={onButtonClick}>
-        <ArrowRightIcon />
-      </Button>
-    </div>
-  </div>
-)
+async function searchPlatform(platform: Platform, searchTerm: string) {
+  const url = platform.toSearchUrl(searchTerm)
+  const html = await extractDomContent(url)
+  return platform.toScrapedSearchResult(html)
+}
 
-export const Popup = () => {
-  // useEffect(() => {
-  //   chrome.storage.sync.get(['count'], (result) => {
-  //     setCount(result.count || 0)
-  //   })
-  // }, [])
+const Popup = () => {
+  const [tempSearchTerm, setTempSearchTerm] = useStorageState<string>('popup.tempSearchTerm', '')
+  const [searchTerm, setSearchTerm] = useStorageState<string>('popup.searchTerm', '')
 
-  // useEffect(() => {
-  //   chrome.storage.sync.set({ count })
-  //   chrome.runtime.sendMessage({ type: 'COUNT', count })
-  // }, [count])
+  const { searchResults, isLoading } = useQueries({
+    queries: Object.values(platforms).map((platform) =>
+      queryOptions({
+        queryKey: ['search', { platform, searchTerm }],
+        queryFn: () => searchPlatform(platform, searchTerm),
+        enabled: !!searchTerm && !!platform.id,
+        staleTime: 1000 * 60,
+      }),
+    ),
+    combine: (results) => ({
+      searchResults: results.filter((result) => result.isFetched).map((result) => result.data),
+      isLoading: results.some((result) => result.isLoading),
+      isError: results.some((result) => result.isError),
+    }),
+  })
 
-  const [searchTerm, setSearchTerm] = useState<string>('')
-  const [searchResult, setSearchResult] = useState<SearchResult[]>([])
-
-  const onClick: React.EventHandler<any> = async (e) => {
+  const onSubmit: React.EventHandler<any> = async (e) => {
     e.preventDefault()
-    setSearchResult([])
-    try {
-      for (const platform of Object.values(platforms)) {
-        const url = platform.toSearchUrl(searchTerm)
-        extractDomContent(url).then((html) => {
-          const result = platform.toScrapedSearchResult(html)
-          if (result) {
-            setSearchResult((prev) => [...prev, result])
-          }
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    setSearchTerm(tempSearchTerm)
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempSearchTerm(e.target.value)
   }
 
   const visitUrl = (url: string) => {
@@ -82,28 +54,29 @@ export const Popup = () => {
         <h1 className="text-xl font-bold">Thrifty</h1>
       </div>
       <div className="flex items-center space-x-2 p-4">
-        <form className="flex space-x-2 w-full" onSubmit={onClick}>
+        <form className="flex space-x-2 w-full" onSubmit={onSubmit}>
           <Input
             type="text"
             placeholder="Enter your search query"
-            value={searchTerm}
-            onChange={(e) => {
-              e.preventDefault()
-              setSearchTerm(e.target.value)
-            }}
+            value={tempSearchTerm}
+            onChange={onChange}
           />
-          <Button variant="default" type="submit">
-            Search
-          </Button>
+          {isLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button variant="default" type="submit">
+              Search
+            </Button>
+          )}
         </form>
       </div>
-      {searchResult.length === 0 && (
+      {searchResults.length === 0 && (
         <div className="flex flex-col space-y-1.5 p-4">
           <h3 className="text-base font-semibold leading-none tracking-tight">No results found</h3>
           <p className="text-sm text-muted-foreground">Please enter a search query to find items</p>
         </div>
       )}
-      {searchResult.length > 0 && (
+      {searchResults.length > 0 && (
         <div className="flex flex-col space-y-1.5 p-4">
           <h3 className="text-base font-semibold leading-none tracking-tight">
             Results for "{searchTerm}"
@@ -111,16 +84,17 @@ export const Popup = () => {
           <p className="text-sm text-muted-foreground">
             We have found following items that might interest you:
           </p>
-          <div className="space-y-4 pt-2">
-            {searchResult.map((result, index) => {
+          <div className="space-y-4 pt-4">
+            {searchResults.map((result, index) => {
+              if (!result) return null
               const platform = platforms[result.platformId]
               return (
                 <SearchResultItem
-                  key={index}
+                  key={result.platformId + index}
                   name={`${platform.name} ${toCountryEmoji(platform.country)}`}
                   itemsAmount={result.amountOfResults}
                   minPrice={result.minPrice}
-                  onButtonClick={() => visitUrl(platform.toSearchUrl('mutable instruments'))}
+                  onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
                 />
               )
             })}
@@ -131,4 +105,4 @@ export const Popup = () => {
   )
 }
 
-export default Popup
+export default withProviders(Popup)
