@@ -1,7 +1,14 @@
-import { parseDBA, parseEbayKleinanzeigen } from './scraper'
+import { parseDBA, parseEbayKleinanzeigen, parseWillhaben } from './scraper'
 
-export type PlatformId = 'kleinanzeigen' | 'dba'
-export type Country = 'Germany' | 'Denmark' | 'France' | 'Spain' | 'Italy' | 'United Kingdom'
+export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben'
+export type Country =
+  | 'Germany'
+  | 'Denmark'
+  | 'France'
+  | 'Spain'
+  | 'Italy'
+  | 'United Kingdom'
+  | 'Austria'
 export type Currency = 'EUR' | 'DKK' | 'GBP'
 
 export type Platform = {
@@ -44,5 +51,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.dba.dk/soeg/?soeg=${searchTerm}&sort=price`
     },
     toScrapedSearchResult: parseDBA,
+  },
+  willhaben: {
+    id: 'willhaben',
+    name: 'Willhaben',
+    url: 'https://www.willhaben.at',
+    country: 'Austria',
+    currency: 'EUR',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = searchTerm.trim().toLocaleLowerCase().replace(/\s/g, '+')
+      return `https://www.willhaben.at/iad/kaufen-und-verkaufen/marktplatz?keyword=${searchTerm}&page=1&sort=3`
+    },
+    toScrapedSearchResult: parseWillhaben,
   },
 }
