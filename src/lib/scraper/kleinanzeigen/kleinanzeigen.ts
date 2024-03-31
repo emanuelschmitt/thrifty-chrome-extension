@@ -1,5 +1,5 @@
 import { CheerioAPI, load } from 'cheerio'
-import { SearchResult } from '../model'
+import { SearchResult } from '../../model'
 
 function getMinPrice($: CheerioAPI): number | null {
   const prices = $('.aditem-main--middle--price-shipping--price')
@@ -23,7 +23,7 @@ function getNumberOfResults($: CheerioAPI): number {
   return match && match[1] ? parseInt(match[1], 10) : 0
 }
 
-export function parseEbayKleinanzeigen(html: string): SearchResult {
+export function parseKleinanzeigen(html: string): SearchResult {
   const $ = load(html)
 
   const amountOfResults = getNumberOfResults($)

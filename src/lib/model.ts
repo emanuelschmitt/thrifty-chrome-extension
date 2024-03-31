@@ -1,6 +1,6 @@
 import {
   parseDBA,
-  parseEbayKleinanzeigen,
+  parseKleinanzeigen,
   parseSubito,
   parseWillhaben,
   parseLeboncoin,
@@ -44,7 +44,7 @@ export const platforms: Record<PlatformId, Platform> = {
       searchTerm = searchTerm.trim().toLocaleLowerCase().replace(/\s/g, '-')
       return `https://www.ebay-kleinanzeigen.de/s-sortierung:preis/${searchTerm}/k0`
     },
-    toScrapedSearchResult: parseEbayKleinanzeigen,
+    toScrapedSearchResult: parseKleinanzeigen,
   },
   dba: {
     id: 'dba',
