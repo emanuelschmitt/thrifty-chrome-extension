@@ -12,6 +12,11 @@ function getMinPrice($: CheerioAPI): number | null {
         .replace(',', '.')
         .replace('.', ''),
     ) // Replace commas with dots and remove other non-numeric characters
+
+    if (isNaN(price)) {
+      return // Skip this element
+    }
+
     const priceInt = Math.round(price * 100) // Convert to integer (e.g., € 0,20 -> 20, € 270 -> 27000, € 390 -> 39000)
     prices.push(priceInt)
   })

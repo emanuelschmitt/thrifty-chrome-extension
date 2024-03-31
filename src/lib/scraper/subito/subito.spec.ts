@@ -26,6 +26,11 @@ describe('Subito', () => {
         amountOfResults: 0,
         minPrice: null,
       },
+      {
+        filename: 'nan-subito.html',
+        amountOfResults: 12,
+        minPrice: 300,
+      },
     ])(
       'should return the amount of results and the minimum price',
       ({ amountOfResults, filename, minPrice }) => {
