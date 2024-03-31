@@ -1,4 +1,4 @@
-export * from './kleinanzeigen/kleinanzeigen'
+export * from './kleinanzeigen'
 export * from './dba'
 export * from './willhaben'
 export * from './subito'
