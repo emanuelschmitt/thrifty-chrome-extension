@@ -26,6 +26,8 @@ export const queryClient = new QueryClient({
       gcTime: GC_TIME_MS,
       staleTime: 1000 * 60 * 5, // 5min
       refetchOnWindowFocus: false, // default: true
+      refetchOnMount: false,
+      refetchOnReconnect: false,
     },
   },
 })

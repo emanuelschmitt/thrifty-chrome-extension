@@ -1,10 +1,10 @@
 import { CheerioAPI, load } from 'cheerio'
-import { SearchResult } from '../model'
+import { SearchResult } from '../../model'
 
 function getMinPrice($: CheerioAPI): number | null {
   let prices: number[] = []
 
-  $('div[class^="index-module_price"]').each((index, element) => {
+  $('p[class^="index-module_price"]').each((index, element) => {
     const priceText = $(element).text().trim()
     const price = parseFloat(
       priceText
@@ -23,25 +23,22 @@ function getMinPrice($: CheerioAPI): number | null {
   return Math.min(...prices)
 }
 
-function getNumberOfResults($: CheerioAPI): number | null {
+function getNumberOfResults($: CheerioAPI): number {
   const summaryText = $('.listing-heading > p').text()
   const regex = /(\d+) risul/
   const match = summaryText.match(regex)
 
-  return match && match[1] ? parseInt(match[1], 10) : null
+  return match && match[1] ? parseInt(match[1], 10) : 0
 }
 
-export function parseSubito(html: string): SearchResult | null {
+export function parseSubito(html: string): SearchResult {
   const $ = load(html)
 
   const amountOfResults = getNumberOfResults($)
-  if (!amountOfResults || amountOfResults === 0) {
-    return null
-  }
 
   return {
     platformId: 'subito',
     amountOfResults,
-    minPrice: getMinPrice($),
+    minPrice: amountOfResults === 0 ? null : getMinPrice($),
   }
 }

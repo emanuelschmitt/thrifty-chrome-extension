@@ -1,7 +1,7 @@
 import { CheerioAPI, load } from 'cheerio'
 import { SearchResult } from '../model'
 
-function getMinPrice($: CheerioAPI): number {
+function getMinPrice($: CheerioAPI): number | null {
   let minPrice = Infinity
 
   $('tr.dbaListing').each((_, element) => {
@@ -13,14 +13,14 @@ function getMinPrice($: CheerioAPI): number {
     }
   })
 
-  return minPrice === Infinity ? -1 : minPrice
+  return minPrice === Infinity ? null : minPrice
 }
 
-function getNumberOfResults($: CheerioAPI): number | null {
+function getNumberOfResults($: CheerioAPI): number {
   const text = $('tr.search-result-separator td').text().trim()
   const match = text.match(/\d+/)
   if (!match || !match[0]) {
-    return null
+    return 0
   }
   return parseInt(match[0], 10)
 }
@@ -29,13 +29,10 @@ export function parseDBA(html: string): SearchResult | null {
   const $ = load(html)
 
   const amountOfResults = getNumberOfResults($)
-  if (!amountOfResults || amountOfResults === 0) {
-    return null
-  }
 
   return {
     platformId: 'dba',
     amountOfResults,
-    minPrice: getMinPrice($),
+    minPrice: amountOfResults === 0 ? null : getMinPrice($),
   }
 }

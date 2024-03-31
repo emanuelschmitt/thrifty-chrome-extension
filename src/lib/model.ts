@@ -1,6 +1,12 @@
-import { parseDBA, parseEbayKleinanzeigen, parseSubito, parseWillhaben } from './scraper'
+import {
+  parseDBA,
+  parseEbayKleinanzeigen,
+  parseSubito,
+  parseWillhaben,
+  parseLeboncoin,
+} from './scraper'
 
-export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben' | 'subito'
+export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben' | 'subito' | 'leboncoin'
 export type Country =
   | 'Germany'
   | 'Denmark'
@@ -75,5 +81,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.subito.it/annunci-italia/vendita/usato/?q=${searchTerm}&order=priceasc`
     },
     toScrapedSearchResult: parseSubito,
+  },
+  leboncoin: {
+    id: 'leboncoin',
+    name: 'Leboncoin',
+    url: 'https://www.leboncoin.fr',
+    country: 'France',
+    currency: 'EUR',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.leboncoin.fr/recherche/?text=${searchTerm}&sort=price&order=asc`
+    },
+    toScrapedSearchResult: parseLeboncoin,
   },
 }
