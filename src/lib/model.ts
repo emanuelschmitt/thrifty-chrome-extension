@@ -4,9 +4,16 @@ import {
   parseSubito,
   parseWillhaben,
   parseLeboncoin,
+  parseMilanuncios,
 } from './scraper'
 
-export type PlatformId = 'kleinanzeigen' | 'dba' | 'willhaben' | 'subito' | 'leboncoin'
+export type PlatformId =
+  | 'kleinanzeigen'
+  | 'dba'
+  | 'willhaben'
+  | 'subito'
+  | 'leboncoin'
+  | 'milanuncios'
 export type Country =
   | 'Germany'
   | 'Denmark'
@@ -93,5 +100,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.leboncoin.fr/recherche/?text=${searchTerm}&sort=price&order=asc`
     },
     toScrapedSearchResult: parseLeboncoin,
+  },
+  milanuncios: {
+    id: 'milanuncios',
+    name: 'Milanuncios',
+    url: 'https://www.milanuncios.com',
+    country: 'Spain',
+    currency: 'EUR',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.milanuncios.com/anuncios/?s=${searchTerm}&orden=baratos&fromSearch=1`
+    },
+    toScrapedSearchResult: parseMilanuncios,
   },
 }

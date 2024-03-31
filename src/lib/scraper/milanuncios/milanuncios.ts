@@ -1,9 +1,9 @@
 import { CheerioAPI, load } from 'cheerio'
-import { SearchResult } from '../model'
+import { SearchResult } from '../../model'
 
 function getMinPrice($: CheerioAPI): number | null {
   let minPrice = Infinity
-  $('span[data-testid^="search-result-entry-price-"]').each((index, element) => {
+  $('span[class^="ma-AdPrice-value"]').each((index, element) => {
     const priceText = $(element).text().trim()
     const price = parseFloat(
       priceText
@@ -22,20 +22,20 @@ function getMinPrice($: CheerioAPI): number | null {
 }
 
 function getNumberOfResults($: CheerioAPI): number {
-  const summaryText = $('#result-list-title').text()
-  const regex = /(\d+) Anzeigen/
+  const summaryText = $('.ma-ContentListingSummary-label > div > span.ma-SharedText').text()
+  const regex = /(\d+) anuncios/
   const match = summaryText.match(regex)
 
   return match && match[1] ? parseInt(match[1], 10) : 0
 }
 
-export function parseWillhaben(html: string): SearchResult | null {
+export function parseMilanuncios(html: string): SearchResult | null {
   const $ = load(html)
 
   const amountOfResults = getNumberOfResults($)
 
   return {
-    platformId: 'willhaben',
+    platformId: 'milanuncios',
     amountOfResults,
     minPrice: amountOfResults === 0 ? null : getMinPrice($),
   }
