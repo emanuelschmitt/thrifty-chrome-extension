@@ -1,25 +1,25 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-import { parseSubito } from './subito'
+import { parseDBA } from './dba'
 
 function readHtmlFile(filename: string): string {
   const filePath = path.join(__dirname, 'fixtures', filename)
   return fs.readFileSync(filePath, 'utf8')
 }
 
-describe('Subito', () => {
-  describe('parseSubito', () => {
+describe('DBA', () => {
+  describe('parseDBA', () => {
     it.each([
       {
         filename: 'single.html',
         amountOfResults: 1,
-        minPrice: 16500,
+        minPrice: 1800,
       },
       {
         filename: 'multi.html',
-        amountOfResults: 10,
-        minPrice: 100,
+        amountOfResults: 8,
+        minPrice: 800,
       },
       {
         filename: 'not-found.html',
@@ -30,9 +30,9 @@ describe('Subito', () => {
       'should return the amount of results and the minimum price',
       ({ amountOfResults, filename, minPrice }) => {
         const html = readHtmlFile(filename)
-        const result = parseSubito(html)
+        const result = parseDBA(html)
         expect(result).toEqual({
-          platformId: 'subito',
+          platformId: 'dba',
           amountOfResults,
           minPrice,
         })

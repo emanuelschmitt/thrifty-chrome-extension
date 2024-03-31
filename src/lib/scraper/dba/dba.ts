@@ -1,5 +1,5 @@
 import { CheerioAPI, load } from 'cheerio'
-import { SearchResult } from '../model'
+import { SearchResult } from '../../model'
 
 function getMinPrice($: CheerioAPI): number | null {
   let minPrice = Infinity
