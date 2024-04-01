@@ -6,6 +6,7 @@ import {
   parseLeboncoin,
   parseMilanuncios,
   parseGumtree,
+  parseMarktplaats,
 } from './scraper'
 
 export type PlatformId =
@@ -16,6 +17,7 @@ export type PlatformId =
   | 'leboncoin'
   | 'milanuncios'
   | 'gumtree'
+  | 'marktplaats'
 
 export type Country =
   | 'Germany'
@@ -25,6 +27,8 @@ export type Country =
   | 'Italy'
   | 'United Kingdom'
   | 'Austria'
+  | 'Netherlands'
+
 export type Currency = 'EUR' | 'DKK' | 'GBP'
 
 export type Platform = {
@@ -127,5 +131,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.gumtree.com/search?q=${searchTerm}&sort=price_lowest_first`
     },
     toScrapedSearchResult: parseGumtree,
+  },
+  marktplaats: {
+    id: 'marktplaats',
+    name: 'Marktplaats',
+    url: 'https://www.marktplaats.nl',
+    country: 'Netherlands',
+    currency: 'EUR',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.marktplaats.nl/q/${searchTerm}/#sortBy:PRICE|sortOrder:INCREASING`
+    },
+    toScrapedSearchResult: parseMarktplaats,
   },
 }

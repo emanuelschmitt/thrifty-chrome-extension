@@ -22,6 +22,8 @@ export const toCountryEmoji = (country: Country) => {
       return '🇩🇰'
     case 'Austria':
       return '🇦🇹'
+    case 'Netherlands':
+      return '🇳🇱'
     default:
       return '🏴‍☠️'
   }
