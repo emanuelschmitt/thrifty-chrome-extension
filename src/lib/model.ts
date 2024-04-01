@@ -5,6 +5,7 @@ import {
   parseWillhaben,
   parseLeboncoin,
   parseMilanuncios,
+  parseGumtree,
 } from './scraper'
 
 export type PlatformId =
@@ -14,6 +15,8 @@ export type PlatformId =
   | 'subito'
   | 'leboncoin'
   | 'milanuncios'
+  | 'gumtree'
+
 export type Country =
   | 'Germany'
   | 'Denmark'
@@ -112,5 +115,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.milanuncios.com/anuncios/?s=${searchTerm}&orden=baratos&fromSearch=1`
     },
     toScrapedSearchResult: parseMilanuncios,
+  },
+  gumtree: {
+    id: 'gumtree',
+    name: 'Gumtree',
+    url: 'https://www.gumtree.com',
+    country: 'United Kingdom',
+    currency: 'GBP',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.gumtree.com/search?q=${searchTerm}&sort=price_lowest_first`
+    },
+    toScrapedSearchResult: parseGumtree,
   },
 }
