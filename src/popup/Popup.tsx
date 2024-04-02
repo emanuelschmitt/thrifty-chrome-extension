@@ -30,7 +30,7 @@ const Popup = () => {
       searchResults: results
         .filter((result) => result.isFetched)
         .map((result) => result.data)
-        .filter(Boolean),
+        .filter((result) => result?.amountOfResults ?? 0 > 0),
       isLoading: results.some((result) => result.isLoading),
       isError: results.some((result) => result.isError),
       isFetched: results.every((result) => result.isFetched),
@@ -93,23 +93,27 @@ const Popup = () => {
             Results for "{searchTerm}"
           </h3>
           <p className="text-sm text-muted-foreground">
-            We have found following items that might interest you:
+            We have found {searchResults.length}{' '}
+            {searchResults.length === 1 ? 'result ' : 'results '}
+            for your search query:
           </p>
-          <div className="space-y-4 pt-4">
-            {searchResults.map((result, index) => {
-              if (!result) return null
-              const platform = platforms[result.platformId]
-              return (
-                <SearchResultItem
-                  key={result.platformId + index}
-                  name={`${platform.name} ${toCountryEmoji(platform.country)}`}
-                  itemsAmount={result.amountOfResults}
-                  minPrice={result.minPrice}
-                  currency={platform.currency}
-                  onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
-                />
-              )
-            })}
+          <div className="pt-4">
+            <div className="overflow-y-scroll max-h-60 space-y-4">
+              {searchResults.map((result, index) => {
+                if (!result) return null
+                const platform = platforms[result.platformId]
+                return (
+                  <SearchResultItem
+                    key={result.platformId + index}
+                    name={`${platform.name} ${toCountryEmoji(platform.country)}`}
+                    itemsAmount={result.amountOfResults}
+                    minPrice={result.minPrice}
+                    currency={platform.currency}
+                    onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       )}
