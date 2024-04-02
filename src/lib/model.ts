@@ -7,6 +7,7 @@ import {
   parseMilanuncios,
   parseGumtree,
   parseMarktplaats,
+  parseBlocket,
 } from './scraper'
 
 export type PlatformId =
@@ -18,6 +19,7 @@ export type PlatformId =
   | 'milanuncios'
   | 'gumtree'
   | 'marktplaats'
+  | 'blocket'
 
 export type Country =
   | 'Germany'
@@ -28,8 +30,9 @@ export type Country =
   | 'United Kingdom'
   | 'Austria'
   | 'Netherlands'
+  | 'Sweden'
 
-export type Currency = 'EUR' | 'DKK' | 'GBP'
+export type Currency = 'EUR' | 'DKK' | 'GBP' | 'SEK'
 
 export type Platform = {
   id: PlatformId
@@ -143,5 +146,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.marktplaats.nl/q/${searchTerm}/#sortBy:PRICE|sortOrder:INCREASING`
     },
     toScrapedSearchResult: parseMarktplaats,
+  },
+  blocket: {
+    id: 'blocket',
+    name: 'Blocket',
+    url: 'https://www.blocket.se',
+    country: 'Sweden',
+    currency: 'SEK',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.blocket.se/annonser/hela_sverige?q=${searchTerm}&sort=price`
+    },
+    toScrapedSearchResult: parseBlocket,
   },
 }

@@ -22,6 +22,11 @@ describe('Leboncoin', () => {
         minPrice: 500,
       },
       {
+        filename: 'multi-2.html',
+        amountOfResults: 38351,
+        minPrice: 0,
+      },
+      {
         filename: 'not-found.html',
         amountOfResults: 0,
         minPrice: null,

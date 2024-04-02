@@ -18,9 +18,15 @@ function getMinPrice($: CheerioAPI): number | null {
 
 function getNumberOfResults($: CheerioAPI): number {
   const summaryText = $('.breadcrump-summary').text()
-  const regex = /(\d+) Ergebnissen/
+  const regex = /([\d\.\s]+) Ergebnissen/
   const match = summaryText.match(regex)
-  return match && match[1] ? parseInt(match[1], 10) : 0
+
+  if (!match || !match[1]) {
+    return 0
+  }
+
+  const sanitizedMatch = match[1].replace(/\./g, '').replace(/\s/g, '')
+  return parseInt(sanitizedMatch, 10)
 }
 
 export function parseKleinanzeigen(html: string): SearchResult {
