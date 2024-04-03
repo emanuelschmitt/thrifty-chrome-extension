@@ -26,13 +26,16 @@ export const toCountryEmoji = (country: Country) => {
       return '🇳🇱'
     case 'Sweden':
       return '🇸🇪'
+    case 'Norway':
+      return '🇳🇴'
     default:
       return '🏴‍☠️'
   }
 }
 
 export const formatCurrency = (amount: number, currency: Currency) => {
-  if (['DKK', 'SEK'].includes(currency)) {
+  const nonMinorCurrencies: Currency[] = ['DKK', 'SEK', 'NOK']
+  if (nonMinorCurrencies.includes(currency)) {
     return amount + ' ' + currency
   }
   return (amount / 100).toFixed(2) + ' ' + currency

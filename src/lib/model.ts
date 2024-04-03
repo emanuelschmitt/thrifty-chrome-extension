@@ -8,6 +8,7 @@ import {
   parseGumtree,
   parseMarktplaats,
   parseBlocket,
+  parseFinn,
 } from './scraper'
 
 export type PlatformId =
@@ -20,6 +21,7 @@ export type PlatformId =
   | 'gumtree'
   | 'marktplaats'
   | 'blocket'
+  | 'finn'
 
 export type Country =
   | 'Germany'
@@ -31,8 +33,9 @@ export type Country =
   | 'Austria'
   | 'Netherlands'
   | 'Sweden'
+  | 'Norway'
 
-export type Currency = 'EUR' | 'DKK' | 'GBP' | 'SEK'
+export type Currency = 'EUR' | 'DKK' | 'GBP' | 'SEK' | 'NOK'
 
 export type Platform = {
   id: PlatformId
@@ -158,5 +161,17 @@ export const platforms: Record<PlatformId, Platform> = {
       return `https://www.blocket.se/annonser/hela_sverige?q=${searchTerm}&sort=price`
     },
     toScrapedSearchResult: parseBlocket,
+  },
+  finn: {
+    id: 'finn',
+    name: 'Finn',
+    url: 'https://www.finn.no',
+    country: 'Norway',
+    currency: 'NOK',
+    toSearchUrl: (searchTerm) => {
+      searchTerm = encodeURIComponent(searchTerm.trim())
+      return `https://www.finn.no/bap/forsale/search.html?q=${searchTerm}&sort=PRICE_ASC`
+    },
+    toScrapedSearchResult: parseFinn,
   },
 }
