@@ -17,6 +17,11 @@ describe('Kleinanzeigen', () => {
         minPrice: 54300,
       },
       {
+        filename: 'single-2.html',
+        amountOfResults: 1,
+        minPrice: 114900,
+      },
+      {
         filename: 'multi.html',
         amountOfResults: 2,
         minPrice: 52900,

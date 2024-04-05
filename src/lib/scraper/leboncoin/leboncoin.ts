@@ -3,15 +3,10 @@ import { SearchResult } from '../../model'
 
 function getMinPrice($: CheerioAPI): number | null {
   let minPrice = Infinity
-  $('span[data-qa-id="aditem_price"]').each((index, element) => {
+  $('span[data-qa-id="aditem_price"]').each((_, element) => {
     const priceText = $(element).text().trim()
-    const price = parseFloat(
-      priceText
-        .replace(/[^\d,.]/g, '')
-        .replace(',', '.')
-        .replace('.', ''),
-    ) // Replace commas with dots and remove other non-numeric characters
-    const priceInt = Math.round(price * 100) // Convert to integer (e.g., € 0,20 -> 20, € 270 -> 27000, € 390 -> 39000)
+    const price = parseFloat(priceText.replace(/[^\d]/g, ''))
+    const priceInt = Math.round(price * 100) //
 
     if (priceInt < minPrice) {
       minPrice = priceInt

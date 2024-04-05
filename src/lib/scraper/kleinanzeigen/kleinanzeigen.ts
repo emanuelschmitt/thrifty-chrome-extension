@@ -11,7 +11,10 @@ function getMinPrice($: CheerioAPI): number | null {
     return 0
   }
 
-  const filteredPrices = prices.filter((price) => price !== 'VB' || !isNaN(parseInt(price)))
+  const filteredPrices = prices
+    .map((price) => price.replace(/[^\d]/g, ''))
+    .filter((price) => price !== 'VB' || !isNaN(parseInt(price)))
+
   // Determine the output
   return filteredPrices.length ? parseInt(filteredPrices[0]) * 100 : null
 }
