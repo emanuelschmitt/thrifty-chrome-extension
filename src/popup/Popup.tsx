@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, LogoIcon, ButtonLoading, ScrollArea } from '@/components/ui'
+import { Button, Input, ButtonLoading, ScrollArea } from '@/components/ui'
 import { Platform, platforms, toCountryEmoji } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
 import { withProviders } from '@/lib/providers'
@@ -7,6 +7,7 @@ import { useQueries } from '@tanstack/react-query'
 import { queryOptions } from '@tanstack/react-query'
 import { useStorageState } from '@/lib/store'
 import { SearchResultItem } from './search-result-item'
+import { Layout } from './layout'
 
 async function searchPlatform(platform: Platform, searchTerm: string) {
   const url = platform.toSearchUrl(searchTerm)
@@ -51,11 +52,7 @@ const Popup = () => {
   }
 
   return (
-    <main className="flex flex-col w-full mb-4">
-      <div className="flex items-center space-x-2 w-full mb-2 bg-[#CCCCFF] p-4">
-        <LogoIcon className="w-8 h-8" />
-        <h1 className="text-xl font-bold">Thrifty</h1>
-      </div>
+    <Layout>
       <div className="flex items-center space-x-2 p-4">
         <form className="flex space-x-2 w-full" onSubmit={onSubmit}>
           <Input
@@ -119,7 +116,7 @@ const Popup = () => {
           </ScrollArea>
         </div>
       )}
-    </main>
+    </Layout>
   )
 }
 
