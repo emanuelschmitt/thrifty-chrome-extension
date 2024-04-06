@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, LogoIcon, ButtonLoading } from '@/components/ui'
+import { Button, Input, LogoIcon, ButtonLoading, ScrollArea } from '@/components/ui'
 import { Platform, platforms, toCountryEmoji } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
 import { withProviders } from '@/lib/providers'
@@ -92,29 +92,31 @@ const Popup = () => {
           <h3 className="text-base font-semibold leading-none tracking-tight">
             Results for "{searchTerm}"
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground pb-2">
             We have found {searchResults.length}{' '}
             {searchResults.length === 1 ? 'result ' : 'results '}
             for your search query:
           </p>
-          <div className="pt-4">
-            <div className="overflow-y-scroll max-h-60 space-y-4">
-              {searchResults.map((result, index) => {
-                if (!result) return null
-                const platform = platforms[result.platformId]
-                return (
-                  <SearchResultItem
-                    key={result.platformId + index}
-                    name={`${platform.name} ${toCountryEmoji(platform.country)}`}
-                    itemsAmount={result.amountOfResults}
-                    minPrice={result.minPrice}
-                    currency={platform.currency}
-                    onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
-                  />
-                )
-              })}
+          <ScrollArea className="max-h-60 full-w rounded-md border">
+            <div className="p-4">
+              <div className="space-y-4">
+                {searchResults.map((result, index) => {
+                  if (!result) return null
+                  const platform = platforms[result.platformId]
+                  return (
+                    <SearchResultItem
+                      key={result.platformId + index}
+                      name={`${platform.name} ${toCountryEmoji(platform.country)}`}
+                      itemsAmount={result.amountOfResults}
+                      minPrice={result.minPrice}
+                      currency={platform.currency}
+                      onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
+                    />
+                  )
+                })}
+              </div>
             </div>
-          </div>
+          </ScrollArea>
         </div>
       )}
     </main>
