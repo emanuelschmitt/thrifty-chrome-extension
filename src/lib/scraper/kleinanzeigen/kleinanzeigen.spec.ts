@@ -32,6 +32,11 @@ describe('Kleinanzeigen', () => {
         minPrice: 0,
       },
       {
+        filename: 'multi-3.html',
+        amountOfResults: 82,
+        minPrice: 100,
+      },
+      {
         filename: 'not-found.html',
         amountOfResults: 0,
         minPrice: null,
