@@ -97,7 +97,7 @@ const Popup = () => {
             {searchResults.length === 1 ? 'result ' : 'results '}
             for your search query:
           </p>
-          <ScrollArea className="max-h-60 full-w rounded-md border">
+          <ScrollArea className="max-h-60 full-w rounded-md border overflow-scroll">
             <div className="p-4">
               <div className="space-y-4">
                 {searchResults.map((result, index) => {

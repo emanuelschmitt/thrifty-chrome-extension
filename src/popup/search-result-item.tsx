@@ -1,6 +1,6 @@
 import { Button, Avatar, AvatarFallback } from '@/components/ui'
 import { Currency, formatCurrency } from '@/lib'
-import { ExternalLink } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 
 export const SearchResultItem = ({
   name,
@@ -31,7 +31,7 @@ export const SearchResultItem = ({
     </div>
     <div className="flex-shrink-0">
       <Button variant="secondary" size="icon" onClick={onButtonClick}>
-        <ExternalLink />
+        <ChevronRight />
       </Button>
     </div>
   </div>
