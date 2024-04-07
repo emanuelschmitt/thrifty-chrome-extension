@@ -8,6 +8,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+  Separator,
 } from '@/components/ui'
 import { SearchIcon, SettingsIcon } from 'lucide-react'
 import { Platform, platforms, toCountryEmoji } from '@/lib'
@@ -53,6 +54,7 @@ const Popup = () => {
 
   const onSubmit: React.EventHandler<any> = async (e) => {
     e.preventDefault()
+    if (!tempSearchTerm) return
     setSearchTerm(tempSearchTerm)
   }
 
@@ -133,14 +135,17 @@ const Popup = () => {
                         const platform = platforms[result.platformId]
 
                         return (
-                          <SearchResultItem
-                            key={result.platformId + index}
-                            name={`${platform.name} ${toCountryEmoji(platform.country)}`}
-                            itemsAmount={result.amountOfResults}
-                            minPrice={result.minPrice}
-                            currency={platform.currency}
-                            onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
-                          />
+                          <>
+                            <SearchResultItem
+                              key={result.platformId + index}
+                              name={`${platform.name} ${toCountryEmoji(platform.country)}`}
+                              itemsAmount={result.amountOfResults}
+                              minPrice={result.minPrice}
+                              currency={platform.currency}
+                              onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
+                            />
+                            {index < searchResults.length - 1 && <Separator />}
+                          </>
                         )
                       })}
                   </div>
