@@ -7,6 +7,6 @@ export const Layout = ({ children }: React.PropsWithChildren) => (
       <LogoIcon className="w-8 h-8" />
       <h1 className="text-xl font-bold">Thrifty</h1>
     </div>
-    {children}
+    <div className="px-4 py-2">{children}</div>
   </main>
 )

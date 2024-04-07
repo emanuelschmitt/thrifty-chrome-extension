@@ -15,9 +15,27 @@ export function useStorageState<T>(key: string, initialValue: T) {
   }
 
   React.useEffect(() => {
+    const handleStorageChange = (
+      changes: { [key: string]: chrome.storage.StorageChange },
+      areaName: string,
+    ) => {
+      if (areaName === 'local' && changes[key]) {
+        setState(changes[key].newValue ?? initialValue)
+      }
+    }
+
+    // Listen for changes in storage
+    chrome.storage.onChanged.addListener(handleStorageChange)
+
+    // Get initial value from storage
     chrome.storage.local.get([key], (result) => {
       setState(result[key] ?? initialValue)
     })
+
+    // Clean up listener
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange)
+    }
   }, [])
 
   return [state, setSyncedState] as const

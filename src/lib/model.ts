@@ -56,13 +56,13 @@ export type SearchResult = {
 export const platforms: Record<PlatformId, Platform> = {
   kleinanzeigen: {
     id: 'kleinanzeigen',
-    name: 'eBay Kleinanzeigen',
-    url: 'https://www.ebay-kleinanzeigen.de',
+    name: 'Kleinanzeigen',
+    url: 'https://www.kleinanzeigen.de',
     country: 'Germany',
     currency: 'EUR',
     toSearchUrl: (searchTerm) => {
       searchTerm = searchTerm.trim().toLocaleLowerCase().replace(/\s/g, '-')
-      return `https://www.ebay-kleinanzeigen.de/s-sortierung:preis/${searchTerm}/k0`
+      return `https://www.kleinanzeigen.de/s-sortierung:preis/${searchTerm}/k0`
     },
     toScrapedSearchResult: parseKleinanzeigen,
   },

@@ -24,9 +24,15 @@
     "test": "jest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@tanstack/query-async-storage-persister": "^5.28.9",
     "@tanstack/react-query": "^5.28.9",
     "@tanstack/react-query-persist-client": "^5.28.9",
@@ -36,8 +42,10 @@
     "lucide-react": "^0.363.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.2",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.19",

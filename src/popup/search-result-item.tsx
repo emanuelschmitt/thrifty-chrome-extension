@@ -1,4 +1,4 @@
-import { Button, Avatar, AvatarFallback } from '@/components/ui'
+import { Button, Avatar, AvatarFallback, Separator } from '@/components/ui'
 import { Currency, formatCurrency } from '@/lib'
 import { ChevronRight } from 'lucide-react'
 
@@ -15,7 +15,7 @@ export const SearchResultItem = ({
   currency: Currency
   onButtonClick(): void
 }) => (
-  <div className="flex items-center space-x-4 rounded-lg w-full">
+  <div className="flex items-center space-x-4 rounded-lg space-y-1 leading-none w-full">
     <div className="flex-shrink-0">
       <Avatar>
         {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
