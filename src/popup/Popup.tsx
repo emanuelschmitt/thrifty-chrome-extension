@@ -11,7 +11,7 @@ import {
   Separator,
 } from '@/components/ui'
 import { SearchIcon, SettingsIcon } from 'lucide-react'
-import { Platform, platforms, toCountryEmoji } from '@/lib'
+import { Platform, platforms } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
 import { withProviders } from '@/lib/providers'
 import { useQueries } from '@tanstack/react-query'
@@ -138,10 +138,9 @@ const Popup = () => {
                           <>
                             <SearchResultItem
                               key={result.platformId + index}
-                              name={`${platform.name} ${toCountryEmoji(platform.country)}`}
+                              platform={platform}
                               itemsAmount={result.amountOfResults}
                               minPrice={result.minPrice}
-                              currency={platform.currency}
                               onButtonClick={() => visitUrl(platform.toSearchUrl(searchTerm))}
                             />
                             {index < searchResults.length - 1 && <Separator />}

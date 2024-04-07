@@ -13,7 +13,7 @@ import {
   AvatarFallback,
   Separator,
 } from '@/components/ui'
-import { platforms } from '@/lib'
+import { platforms, toDisplayName } from '@/lib'
 import { useForm } from 'react-hook-form'
 import { useSettings } from './use-settings'
 
@@ -59,7 +59,7 @@ export function Settings() {
                             </Avatar>
                           </div>
                           <div className="space-y-1 leading-none">
-                            <FormLabel>{platform.name}</FormLabel>
+                            <FormLabel>{toDisplayName(platform)}</FormLabel>
                             <FormDescription>
                               {platform.country} - {platform.currency}
                             </FormDescription>
