@@ -16,7 +16,6 @@ export const SearchResultItem = ({
   <div className="flex items-center space-x-4 rounded-lg space-y-1 leading-none w-full">
     <div className="flex-shrink-0">
       <Avatar>
-        {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
         <AvatarFallback>{platform.name.slice(0, 2)}</AvatarFallback>
       </Avatar>
     </div>

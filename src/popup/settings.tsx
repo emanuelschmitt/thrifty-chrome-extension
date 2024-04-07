@@ -6,7 +6,6 @@ import {
   FormControl,
   FormLabel,
   FormDescription,
-  Button,
   Switch,
   ScrollArea,
   Avatar,
@@ -15,7 +14,7 @@ import {
 } from '@/components/ui'
 import { platforms, toDisplayName } from '@/lib'
 import { useForm } from 'react-hook-form'
-import { useSettings } from './use-settings'
+import { useSettings } from '@/lib/store'
 
 export function Settings() {
   const [settingsState, setSettingsState] = useSettings()
@@ -54,7 +53,6 @@ export function Settings() {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0 w-full">
                           <div className="flex-shrink-0">
                             <Avatar>
-                              {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
                               <AvatarFallback>{platform.name.slice(0, 2)}</AvatarFallback>
                             </Avatar>
                           </div>
