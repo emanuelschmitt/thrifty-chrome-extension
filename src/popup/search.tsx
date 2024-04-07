@@ -78,7 +78,7 @@ const Search = () => {
           <p className="text-sm text-muted-foreground">Please enter a search query to find items</p>
         </div>
       )}
-      {!isLoading && searchResults.length === 0 && (
+      {!isLoading && searchTerm && searchResults.length === 0 && (
         <div className="flex flex-col space-y-1.5 my-4">
           <h3 className="text-base font-semibold leading-none tracking-tight">No results found</h3>
           <p className="text-sm text-muted-foreground">
