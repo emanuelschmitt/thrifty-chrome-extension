@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Input, ButtonLoading, ScrollArea, Separator } from '@/components/ui'
 import { Platform, platforms } from '@/lib'
-import { extractDomContent } from '@/lib/dom'
+import { sendDomExtractionRequest } from '@/lib/dom'
 import { useQueries } from '@tanstack/react-query'
 import { useStorageState, useSettings } from '@/lib/store'
 import { SearchResultItem } from './search-result-item'
 
 async function searchPlatform(platform: Platform, searchTerm: string) {
   const url = platform.toSearchUrl(searchTerm)
-  const html = await extractDomContent(url)
+  const html = await sendDomExtractionRequest(url)
   return platform.toScrapedSearchResult(html)
 }
 

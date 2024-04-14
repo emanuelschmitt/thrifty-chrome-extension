@@ -11,12 +11,12 @@ export type ExtractDomRequestMessage = {
 
 export type ExtractDomSuccessMessage = {
   type: MessageNames.EXTRACT_DOM_SUCCESS
-  payload: { content: string }
+  payload: { url: string; content: string }
 }
 
 export type ExtractDomFailureMessage = {
   type: MessageNames.EXTRACT_DOM_FAILURE
-  payload: { error: string }
+  payload: { url: string; error: string }
 }
 
 export type Message = ExtractDomRequestMessage | ExtractDomSuccessMessage | ExtractDomFailureMessage
