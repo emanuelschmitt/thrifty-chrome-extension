@@ -25,6 +25,11 @@ describe('Marktplaats', () => {
         minPrice: 400,
       },
       {
+        filename: 'multi-2.html',
+        amountOfResults: 42643,
+        minPrice: null,
+      },
+      {
         filename: 'not-found.html',
         amountOfResults: 0,
         minPrice: null,
