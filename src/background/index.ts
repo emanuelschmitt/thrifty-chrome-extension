@@ -2,13 +2,16 @@ import { Message, MessageNames, isExtractDomRequest } from '@/lib/messages'
 
 const openTabs: Set<number> = new Set()
 
-chrome.runtime.onConnect.addListener(function (port) {
+chrome.runtime.onConnect.addListener(async function (port) {
   if (port.name === 'popup') {
     port.onDisconnect.addListener(function () {
-      console.log('popup has been closed')
-      openTabs.forEach((tabId) => {
-        chrome.tabs.remove(tabId, () => {})
-      })
+      for (const tabId of openTabs) {
+        try {
+          chrome.tabs.remove(tabId, () => {})
+        } catch (err) {
+          console.error('failed to remove tab', tabId)
+        }
+      }
     })
   }
 })
