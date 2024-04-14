@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Input, ButtonLoading, ScrollArea, Separator } from '@/components/ui'
 import { Platform, platforms } from '@/lib'
 import { extractDomContent } from '@/lib/dom'
@@ -14,7 +14,7 @@ async function searchPlatform(platform: Platform, searchTerm: string) {
 
 const Search = () => {
   const [tempSearchTerm, setTempSearchTerm] = useStorageState<string>('popup.tempSearchTerm', '')
-  const [searchTerm, setSearchTerm] = useStorageState<string>('popup.searchTerm', '')
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [settingsState] = useSettings()
 
   let { searchResults, isLoading } = useQueries({
@@ -24,17 +24,21 @@ const Search = () => {
         queryKey: ['search', { platform, searchTerm, isPlatformEnabled }],
         queryFn: () => searchPlatform(platform, searchTerm),
         enabled: !!searchTerm && !!platform.id && isPlatformEnabled,
+        retry: false,
+        retryOnMount: false,
       }
     }),
-    combine: (results) => ({
-      searchResults: results
-        .filter((result) => result.isFetched)
-        .map((result) => result.data)
-        .filter((result) => result?.amountOfResults ?? 0 > 0),
-      isLoading: results.some((result) => result.isLoading),
-      isError: results.some((result) => result.isError),
-      isFetched: results.every((result) => result.isFetched),
-    }),
+    combine: (results) => {
+      return {
+        searchResults: results
+          .filter((result) => result.isFetched)
+          .map((result) => result.data)
+          .filter((result) => result?.amountOfResults ?? 0 > 0),
+        isLoading: results.some((result) => result.isLoading),
+        isError: results.some((result) => result.isError),
+        isFetched: results.every((result) => result.isFetched),
+      }
+    },
   })
 
   const onSubmit: React.EventHandler<any> = async (e) => {

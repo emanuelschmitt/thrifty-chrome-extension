@@ -15,6 +15,10 @@ export default defineManifest({
     48: 'img/logo-48.png',
     128: 'img/logo-128.png',
   },
+  background: {
+    service_worker: 'src/background/index.ts',
+    type: 'module',
+  },
   action: {
     default_popup: 'popup.html',
     default_icon: 'img/logo-48.png',
