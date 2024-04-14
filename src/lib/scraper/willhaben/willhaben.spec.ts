@@ -22,6 +22,11 @@ describe('Willhaben', () => {
         minPrice: 300,
       },
       {
+        filename: 'multi-2.html',
+        amountOfResults: 133993,
+        minPrice: null,
+      },
+      {
         filename: 'not-found.html',
         amountOfResults: 0,
         minPrice: null,
