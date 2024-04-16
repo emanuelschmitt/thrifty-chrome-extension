@@ -1,5 +1,5 @@
-import { Button, Avatar, AvatarFallback, Separator } from '@/components/ui'
-import { Currency, Platform, formatCurrency, toDisplayName } from '@/lib'
+import { Button, Avatar, AvatarFallback } from '@/components/ui'
+import { Platform, formatCurrency, toDisplayName } from '@/lib'
 import { ChevronRight } from 'lucide-react'
 
 export const SearchResultItem = ({
