@@ -1,17 +1,11 @@
 {
   "name": "thrify-chrome-extension",
   "displayName": "thrify-chrome-extension",
-  "version": "0.0.0",
-  "author": "no one",
-  "description": "",
+  "version": "0.1.0",
+  "author": "Emanuel Schmitt",
+  "description": "Thrifty Chrome Extension",
   "type": "module",
   "license": "MIT",
-  "keywords": [
-    "chrome-extension",
-    "react",
-    "vite",
-    "create-chrome-ext"
-  ],
   "engines": {
     "node": ">=14.18.0"
   },
