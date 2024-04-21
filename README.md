@@ -1,4 +1,4 @@
-# classifieds-search-extension
+# thrify-chrome-extension
 
 > a chrome extension tools built with Vite + React, and Manifest v3
 
@@ -13,7 +13,7 @@
 run the command
 
 ```shell
-$ cd classifieds-search-extension
+$ cd thrify-chrome-extension
 
 $ npm run dev
 ```
@@ -21,7 +21,7 @@ $ npm run dev
 ### Chrome Extension Developer Mode
 
 1. set your Chrome browser 'Developer mode' up
-2. click 'Load unpacked', and select `classifieds-search-extension/build` folder
+2. click 'Load unpacked', and select `thrify-chrome-extension/build` folder
 
 ### Nomal FrontEnd Developer Mode
 
