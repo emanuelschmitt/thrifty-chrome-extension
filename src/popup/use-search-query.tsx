@@ -23,6 +23,7 @@ export function useSearchQuery({ activeSearchTerm }: UseSearchQueryProps) {
         queryKey: ['search', { platform, activeSearchTerm, isPlatformEnabled }],
         queryFn: () => searchPlatform(platform, activeSearchTerm),
         enabled: !!activeSearchTerm && isPlatformEnabled,
+        retry: false,
       }
     }),
     combine: (results) => {
